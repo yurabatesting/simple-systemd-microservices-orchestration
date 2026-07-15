@@ -1,0 +1,23 @@
+[Unit]
+Description=Mock DB Service
+After=network.target
+
+[Service]
+Type=simple
+User=dbuser
+ExecStart=/opt/microservices/db/start.sh
+Restart=on-failure
+RestartSec=3
+
+# Resource Limits
+MemoryMax=200M
+CPUQuota=15%
+
+# Hardening
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+NoNewPrivileges=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,31 @@
+[Unit]
+Description=Mock Web API Service
+After=network.target my-cache.service my-db.service
+BindsTo=my-cache.service my-db.service
+
+[Service]
+Type=simple
+User=webuser
+WorkingDirectory=/opt/microservices/web
+ExecStart=/opt/microservices/web/start.sh
+
+# Exponential Backoff Restart
+Restart=always
+RestartSec=2
+RestartSteps=5
+RestartMaxDelaySec=30
+
+# Resource Limits
+MemoryMax=150M
+CPUQuota=20%
+
+# Hardening
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+NoNewPrivileges=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+
+[Install]
+WantedBy=multi-user.target

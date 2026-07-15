@@ -1,0 +1,23 @@
+[Unit]
+Description=Mock Cache Service
+After=network.target
+
+[Service]
+Type=simple
+User=cacheuser
+ExecStart=/opt/microservices/cache/start.sh
+Restart=on-failure
+RestartSec=3
+
+# Resource Limits
+MemoryMax=100M
+CPUQuota=10%
+
+# Hardening
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+NoNewPrivileges=yes
+
+[Install]
+WantedBy=multi-user.target
